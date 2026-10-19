@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Expense Tracker</title>
+</head>
+<body>
+    <h1>Expense Tracker</h1>
+
+    <h2>Your Expenses</h2>
+
+    {% if expenses %}
+        <ul>
+        {% for expense in expenses %}
+            <li>
+                [{{ expense.category }}] {{ expense.description }} - NGN{{ expense.amount }}
+                ({{ expense.date }})
+            </li>
+        {% endfor %}
+        </ul>
+        <p><strong>Total Spent: NGN{{ total }}</strong></p>
+    {% else %}
+        <p>No expenses recorded yet!</p>
+    {% endif %}
+
+</body>
+</html>
