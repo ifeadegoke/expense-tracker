@@ -6,6 +6,15 @@
 <body>
     <h1>Expense Tracker</h1>
 
+    <h2>Add New Expense</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Add Expense</button>
+    </form>
+
+    <hr>
+
     <h2>Your Expenses</h2>
 
     {% if expenses %}

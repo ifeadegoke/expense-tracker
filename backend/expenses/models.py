@@ -6,16 +6,16 @@ class Expense(models.Model):
     CATEGORY_CHOICES = [
         ('Food', 'Food'),
         ('Transport', 'Transport'),
-        ('Data', "Data"),
+        ('Data', 'Data'),
         ('Shopping', 'Shopping'),
         ('Other', 'Other')
     ]
 
     category = models.CharField(max_length = 20, choices=CATEGORY_CHOICES)
-    descrisption = models.CharField(max_length=255)
+    description = models.CharField(max_length=255)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     date = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.category} - {self.descrisption} - {self.amount}"
+        return f"{self.category} - {self.description} - {self.amount}"
     
