@@ -25,3 +25,14 @@ class Expense(models.Model):
     def __str__(self):
         return f"{self.category} - {self.description} - {self.amount}"
     
+class Budget(models.Model):
+    amount = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        validators=[MinValueValidator(Decimal('0.01'))]
+    )
+
+    def __str__(self):
+        return f"Budget: {self.amount}"
+
+        

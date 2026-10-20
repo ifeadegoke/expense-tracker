@@ -14,6 +14,30 @@
     </form>
 
     <hr>
+        <h2>Monthly Budget</h2>
+    <form method="post" action="{% url 'set_budget' %}">
+        {% csrf_token %}
+        {{ budget_form.as_p }}
+        <button type="submit">Set Budget</button>
+    </form>
+
+    {% if budget %}
+        <p>Budget: NGN{{ budget.amount }}</p>
+        <p>Spent: NGN{{ total }}</p>
+        <p>Remaining: NGN{{ remaining }}</p>
+        <progress value="{{ percentage|floatformat:0 }}" max="100"></progress>
+        <p>{{ percentage|floatformat:1 }}% used</p>
+
+        {% if status == 'over' %}
+            <p>🚨 You have exceeded your budget!</p>
+        {% elif status == 'warning' %}
+            <p>⚠️ You are close to your budget limit!</p>
+        {% else %}
+            <p>✅ You are within your budget!</p>
+        {% endif %}
+    {% endif %}
+
+    <hr>
 
     <h2>Your Expenses</h2>
 
