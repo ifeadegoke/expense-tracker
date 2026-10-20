@@ -23,9 +23,10 @@
             <li>
                 [{{ expense.category }}] {{ expense.description }} - NGN{{ expense.amount }}
                 ({{ expense.date }})
+                <a href="{% url 'expense_edit' expense.id %}">Edit</a>
                 <form method="post" action="{% url 'expense_delete' expense.id %}" style="display:inline;">
                     {% csrf_token %}
-                    <button type="submit">🗑️ Delete</button>
+                    <button type="submit">Delete</button>
                 </form>
             </li>
         {% endfor %}
@@ -37,3 +38,4 @@
 
 </body>
 </html>
+
