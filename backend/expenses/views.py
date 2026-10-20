@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Expense
 from .forms import ExpenseForm
 
@@ -19,3 +19,10 @@ def expense_list(request):
         'form': form,
     }
     return render(request, 'expenses/expense_list.html', context)
+def expense_delete(request, expense_id):
+    expense = get_object_or_404(Expense, id=expense_id)
+    if request.method == 'POST':
+        expense.delete()
+    return redirect('expense_list')
+
+
