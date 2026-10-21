@@ -59,6 +59,46 @@
     {% else %}
         <p>No expenses recorded yet!</p>
     {% endif %}
+    
+        {% if chart_labels %}
+        <hr>
+        <h2>Spending by Category</h2>
+
+        <div style="max-width:400px; display:inline-block;">
+            <canvas id="pieChart"></canvas>
+        </div>
+        <div style="max-width:500px; display:inline-block;">
+            <canvas id="barChart"></canvas>
+        </div>
+
+        {{ chart_labels|json_script:"chart-labels" }}
+        {{ chart_values|json_script:"chart-values" }}
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+        <script>
+            const labels = JSON.parse(document.getElementById('chart-labels').textContent);
+            const values = JSON.parse(document.getElementById('chart-values').textContent);
+
+            new Chart(document.getElementById('pieChart'), {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{ data: values }]
+                }
+            });
+
+            new Chart(document.getElementById('barChart'), {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{ label: 'Amount spent (NGN)', data: values }]
+                },
+                options: {
+                    scales: { y: { beginAtZero: true } }
+                }
+            });
+        </script>
+    {% endif %}
 
 </body>
 </html>

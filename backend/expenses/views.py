@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Expense, Budget
 from .forms import ExpenseForm, BudgetForm
+from django.db.models import Sum
 
 def expense_list(request):
     if request.method == 'POST':
@@ -13,6 +14,16 @@ def expense_list(request):
 
     expenses = Expense.objects.all()
     total = sum(e.amount for e in expenses)
+
+    category_data =(
+        Expense.objects
+        .values('category')
+        .annotate(total=Sum('amount'))
+        .order_by("category")
+    )
+
+    chart_labels = [item['category'] for item in category_data]
+    chart_values = [float(item['total']) for item in category_data]
 
     budget = Budget.objects.first()
     budget_form = BudgetForm(instance=budget)
@@ -38,7 +49,10 @@ def expense_list(request):
         'budget_form': budget_form,
         'remaining': remaining,
         'percentage': percentage,
-        'status': status,
+        'status': status, 
+        'chart_labels' : chart_labels,
+        'chart_values' : chart_values,
+        
     }
     return render(request, 'expenses/expense_list.html', context)
 
