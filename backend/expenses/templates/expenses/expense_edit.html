@@ -1,18 +1,25 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Edit Expense</title>
-</head>
-<body>
-    <h1>Edit Expense</h1>
-    <p>Editing: {{ expense.description }}</p>
+{% extends 'expenses/base.html' %}
 
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Save Changes</button>
-    </form>
+{% block title %}Edit Expense - Expense Tracker{% endblock %}
 
-    <p><a href="{% url 'expense_list' %}"></a></p>
-</body>
-</html>
+{% block content %}
+
+<h2 class="h4 mb-4">Edit Expense</h2>
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <p class="text-muted">Editing: {{ expense.description }}</p>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <a href="{% url 'expense_list' %}" class="btn btn-outline-secondary">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
