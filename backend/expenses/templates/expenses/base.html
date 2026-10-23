@@ -34,6 +34,18 @@
             </li>
             {% endif %}
         </ul>
+        {% if user.is_authenticated %}
+            <hr>
+            <div class="small text-muted mb-2">Signed in as <strong>{{ user.username }}</strong></div>
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm btn-outline-secondary w-100">Log out</button>
+            </form>
+        {% else %}
+            <hr>
+            <a class="btn btn-sm btn-primary w-100" href="{% url 'login' %}">Log in</a>
+            <a class="btn btn-sm btn-outline-primary w-100" href="{% url 'signup' %}>Sign up</a>"
+        {% endif %}
     </nav>
 
     <main class="flex-grow-1 p-4">

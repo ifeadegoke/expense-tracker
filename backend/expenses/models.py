@@ -1,10 +1,13 @@
 from decimal import Decimal
 from django.core.validators import MinValueValidator
 from django.db import models
+from django.conf import settings
 
-# Create your models here.
+
+
 
 class Expense(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
     CATEGORY_CHOICES = [
         ('Food', 'Food'),
         ('Transport', 'Transport'),
@@ -26,6 +29,7 @@ class Expense(models.Model):
         return f"{self.category} - {self.description} - {self.amount}"
     
 class Budget(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
     amount = models.DecimalField(
         max_digits=10,
         decimal_places=2,
