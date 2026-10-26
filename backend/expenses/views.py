@@ -82,7 +82,7 @@ def expense_edit(request, expense_id):
 @login_required
 def set_budget(request):
     if request.method =='POST':
-        budget = Budget.objects.first(user=request.user).first()
+        budget = Budget.objects.filter(user=request.user).first()
         form = BudgetForm(request.POST, instance=budget)
         if form.is_valid():
             budget = form.save(commit=False)
