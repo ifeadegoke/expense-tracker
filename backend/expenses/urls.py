@@ -12,5 +12,6 @@ urlpatterns = [
     path('budget/', views.set_budget, name='set_budget'),
     path('signup/', views.signup, name='signup'),
     path('api/', include(router.urls)),
+    path('profile/', views.profile, name='profile'),
     
 ]
