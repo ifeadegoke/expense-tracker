@@ -1,11 +1,15 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Expense, Budget
-from .forms import ExpenseForm, BudgetForm, SignupForm, ProfileForm
+from .forms import ExpenseForm, BudgetForm, SignupForm, ProfileForm, StyledPasswordChangeForm
 from django.db.models import Sum
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.urls import reverse_lazy
+from django.contrib.auth.views import PasswordChangeView
+from django.contrib.messages.views import SuccessMessageMixin
+
 
 @login_required
 def expense_list(request):
@@ -115,3 +119,9 @@ def profile(request):
     else:
         form = ProfileForm(instance=request.user)
     return render(request, 'expenses/profile.html', {'form': form})
+
+class ChangePasswordView(SuccessMessageMixin, PasswordChangeView):
+    form_class = StyledPasswordChangeForm
+    template_name = 'expenses/password_change.html'
+    success_url = reverse_lazy('profile')
+    success_message = 'Password Changed Successfully.'
