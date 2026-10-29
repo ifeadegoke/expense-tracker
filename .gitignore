@@ -5,3 +5,5 @@ venv/
 expense.json
 python_class.py
 db.sqlite3
+staticfiles/
+.env
